@@ -1,11 +1,9 @@
 <!-- frontend/templates/index.html -->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-<!-- frontend/templates/index.html -->
 {% extends 'base.html' %}
 
 {% block content %}
 <h1>Resume Builder</h1>
-<form id="resumeForm" action="/resume" method="post" novalidate>
+<form id="resumeForm" action="/resume" method="post"> <!-- 'novalidate' attribute removed -->
     <input type="text" id="name" name="name" placeholder="Full Names" required><br>
     <input type="email" id="email" name="email" placeholder="Email" required><br>
     <input type="text" id="phone" name="phone" placeholder="Phone Number"><br>
@@ -32,4 +30,3 @@
 <div id="message" class="message-area"></div>
 
 {% endblock %}
-
