@@ -7,13 +7,18 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    /* Corrected path for the background image */
+    font-family: 'Arial', sans-serif; /* Using Arial as a common fallback */
+    /* Background Image */
     background-image: url(/static/images/A4-Paper-Mockup-01.jpg);
-    background-size: cover; /* Ensures the image covers the entire background */
-    background-position: center; /* Centers the background image */
-    background-repeat: no-repeat; /* Prevents repeating */
-    background-attachment: fixed; /* Keeps image fixed on scroll */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+    /* Background Overlay for better readability over image */
+    background-color: rgba(0, 0, 0, 0.1); /* Slight dark overlay */
+    background-blend-mode: overlay; /* Blend with the image */
+
     padding: 20px;
     display: flex;
     justify-content: center;
@@ -26,25 +31,29 @@ body {
     width: 90%; /* Responsive width */
     max-width: 800px; /* Max width to prevent it from getting too wide */
     margin: 20px auto; /* Add margin for spacing */
-    background: white;
+    
+    /* Transparent background with a subtle gradient */
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.85), rgba(245, 245, 245, 0.8));
+    
     padding: 30px; /* Increased padding */
-    border-radius: 12px; /* More rounded corners */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition */
+    border-radius: 15px; /* More rounded corners */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out; /* Smooth transition */
 }
 
 .container:hover {
-    transform: translateY(-5px); /* Slight lift on hover */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+    transform: translateY(-8px); /* More pronounced lift on hover */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
 }
 
 h1 {
     text-align: center;
-    color: #333;
-    margin-bottom: 25px;
-    font-size: 2.5em; /* Larger heading */
+    color: #2c3e50; /* Darker, more professional color */
+    margin-bottom: 30px;
+    font-size: 2.8em; /* Larger heading */
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
+    letter-spacing: 0.5px;
 }
 
 h1::after {
@@ -53,91 +62,106 @@ h1::after {
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background-color: #007bff;
+    width: 80px; /* Longer underline */
+    height: 4px; /* Thicker underline */
+    background: linear-gradient(to right, #007bff, #0056b3); /* Gradient underline */
     border-radius: 5px;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Space between form elements */
+    gap: 20px; /* More space between form elements */
+}
+
+label {
+    font-weight: 600; /* Slightly bolder labels */
+    color: #34495e; /* Darker label color */
+    margin-bottom: 5px;
+    display: block; /* Ensures label takes full width */
 }
 
 input, textarea {
-    width: calc(100% - 20px); /* Account for padding */
+    width: calc(100% - 24px); /* Account for padding + border */
     padding: 12px;
-    margin: 0; /* Remove default margin from original */
-    border: 1px solid #ddd;
-    border-radius: 8px; /* Rounded input fields */
-    font-size: 1em;
-    box-sizing: border-box; /* Include padding in width calculation */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+    margin: 0;
+    background: rgba(255, 255, 255, 0.9); /* More opaque for better readability */
+    border: 1px solid #c0c0c0; /* Softer border */
+    border-radius: 8px;
+    font-size: 1.05em; /* Slightly larger font */
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+input:hover, textarea:hover {
+    border-color: #99c9ff; /* Light blue on hover */
 }
 
 input:focus, textarea:focus {
     border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Focus highlight */
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.3); /* More prominent focus highlight */
+    background-color: #ffffff; /* Fully opaque on focus */
     outline: none;
 }
 
 /* Validation styling */
 input.invalid, textarea.invalid {
-    border-color: #e74c3c; /* Red border for invalid input */
-    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25);
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.3);
 }
 
 textarea {
-    resize: vertical; /* Allow vertical resizing */
-    min-height: 80px; /* Minimum height for textareas */
+    resize: vertical;
+    min-height: 100px; /* Taller minimum height */
 }
 
 button {
-    background-color: #007bff;
+    background: linear-gradient(to right, #007bff, #0056b3); /* Gradient button */
     color: white;
-    padding: 12px 20px;
+    padding: 14px 25px; /* Larger padding */
     border: none;
-    border-radius: 8px;
+    border-radius: 10px; /* Slightly more rounded */
     cursor: pointer;
-    font-size: 1.1em;
+    font-size: 1.2em; /* Larger font */
     font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    align-self: center; /* Center the button */
-    margin-top: 20px; /* Space above button */
-    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    align-self: center;
+    margin-top: 30px; /* More space above button */
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3); /* Stronger shadow */
+    letter-spacing: 0.5px;
 }
 
 button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px); /* Slight lift on hover */
-    box-shadow: 0 6px 8px rgba(0, 123, 255, 0.3);
+    background: linear-gradient(to right, #0056b3, #003a7a); /* Darker gradient on hover */
+    transform: translateY(-4px); /* More pronounced lift on hover */
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.4);
 }
 
 button:active {
-    transform: translateY(0); /* Press effect */
-    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
 }
 
 /* Template Selection Styles */
 .template-selection {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #cceeff;
-    background-color: #e6f7ff;
-    border-radius: 8px;
+    margin-top: 25px;
+    padding: 20px; /* More padding */
+    border: 1px solid #aaddff; /* Slightly darker border */
+    background-color: rgba(230, 247, 255, 0.8); /* More opaque light blue */
+    border-radius: 10px;
     text-align: center;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Inner shadow for depth */
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.08); /* More prominent inner shadow */
 }
 
 .template-selection h3 {
-    margin-bottom: 10px;
-    color: #0056b3;
-    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #004085; /* Darker blue */
+    font-size: 1.3em; /* Larger font */
+    letter-spacing: 0.3px;
 }
 
 .template-selection label {
-    margin: 0 15px;
+    margin: 0 20px; /* More space between labels */
     font-weight: bold;
     color: #333;
     cursor: pointer;
@@ -148,21 +172,29 @@ button:active {
     color: #007bff;
 }
 
+.template-selection input[type="radio"] {
+    margin-right: 8px; /* Space between radio button and label text */
+    transform: scale(1.2); /* Slightly larger radio buttons */
+    vertical-align: middle; /* Align with text */
+    cursor: pointer;
+}
+
 /* Base Resume Display Styles (applied to both templates) */
 .resume-display {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.5s ease-out; /* Smooth transition for template changes */
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.9), rgba(248, 248, 248, 0.85)); /* Similar to container */
+    padding: 35px; /* More padding */
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.6s ease-out; /* Slower, smoother transition */
 }
 
 .resume-display h2 {
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 2.2em;
-    padding-bottom: 10px;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 2.5em; /* Larger heading */
+    padding-bottom: 12px;
     position: relative;
+    text-align: left; /* Default to left for display headers */
 }
 
 .resume-display h2::after {
@@ -170,108 +202,107 @@ button:active {
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 40px;
-    height: 2px;
-    background-color: #007bff;
+    width: 60px; /* Longer underline */
+    height: 3px;
+    background: linear-gradient(to right, #007bff, #0056b3);
     border-radius: 5px;
 }
 
-
 .resume-display .section {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px dashed #eee;
-    transition: all 0.4s ease-in-out;
+    margin-bottom: 30px; /* More space between sections */
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(230, 230, 230, 0.7); /* Softer, slightly transparent divider */
+    transition: all 0.5s ease-in-out;
 }
 
 .resume-display .section:last-of-type {
-    border-bottom: none; /* No border for the last section */
+    border-bottom: none;
 }
 
 .resume-display .section h3 {
     color: #007bff;
-    font-size: 1.5em;
-    margin-bottom: 10px;
+    font-size: 1.6em; /* Larger sub-headings */
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
 }
 
 .resume-display .section p {
-    line-height: 1.6;
-    color: #555;
-    font-size: 1em;
-}
-
-.resume-display button {
-    display: block;
-    margin: 30px auto 0;
+    line-height: 1.8; /* More comfortable line height */
+    color: #444; /* Slightly darker text for readability */
+    font-size: 1.05em;
 }
 
 /* Minimal Style Specifics */
 .minimal-style {
     text-align: center;
-    max-width: 600px;
-    border: 1px solid #dcdcdc; /* Light border */
+    max-width: 650px; /* Slightly wider */
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Lighter shadow for minimal */
 }
 
 .minimal-style .minimal-name {
-    font-size: 2.8em;
-    font-weight: bold;
+    font-size: 3.2em; /* Even larger name */
+    font-weight: 700; /* Bolder */
     color: #2c3e50;
-    margin-bottom: 5px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.1);
 }
 
 .minimal-style .minimal-contact {
-    font-size: 0.9em;
-    color: #7f8c8d;
-    margin-bottom: 15px;
+    font-size: 1em; /* Slightly larger */
+    color: #555;
+    margin-bottom: 20px;
 }
 
 .minimal-style .minimal-section {
-    margin-top: 25px;
-    border-top: 1px solid #ecf0f1;
-    padding-top: 20px;
+    margin-top: 30px; /* More space */
+    border-top: 1px solid #e0e0e0;
+    padding-top: 25px;
 }
 
 .minimal-style .minimal-section-title {
-    font-size: 1.6em;
+    font-size: 1.8em; /* Larger title */
     color: #34495e;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
-    background-color: #f0f0f0; /* Subtle background for titles */
-    padding: 5px 10px;
-    border-radius: 5px;
-    display: inline-block; /* To make background fit content */
+    letter-spacing: 1.5px; /* More spacing */
+    margin-bottom: 20px;
+    background-color: rgba(245, 245, 245, 0.8); /* More opaque background */
+    padding: 8px 15px; /* More padding */
+    border-radius: 8px;
+    display: inline-block;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 /* Professional Style Specifics */
 .professional-style {
-    max-width: 750px;
+    max-width: 850px; /* Wider for professional look */
     font-family: 'Times New Roman', serif;
-    line-height: 1.5;
-    border: 1px solid #a8a8a8; /* More pronounced border */
+    line-height: 1.6;
+    border: 1px solid #b0b0b0; /* Stronger border */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* More prominent shadow */
 }
 
 .professional-style .professional-header {
-    background-color: #e9e9e9; /* Slightly darker header */
-    padding: 20px;
-    margin-bottom: 25px;
+    background-color: rgba(240, 240, 240, 0.9); /* More opaque header */
+    padding: 25px 30px; /* More padding */
+    margin-bottom: 30px;
     text-align: left;
-    border-bottom: 2px solid #a8a8a8; /* Stronger border */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    border-bottom: 3px solid #b0b0b0; /* Thicker, darker border */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .professional-style .professional-header h1 {
-    font-size: 3em;
-    color: #333;
-    margin-bottom: 5px;
+    font-size: 3.5em; /* Larger name */
+    color: #222;
+    margin-bottom: 8px;
     text-align: left;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.02);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    letter-spacing: 0.8px;
 }
 
 .professional-style .contact-info {
-    font-size: 1em;
-    color: #666;
+    font-size: 1.05em;
+    color: #555;
 }
 
 .professional-style .contact-info a {
@@ -286,33 +317,34 @@ button:active {
 }
 
 .professional-style .professional-section {
-    margin-bottom: 25px;
+    margin-bottom: 35px; /* More space */
 }
 
 .professional-style .professional-section h2 {
-    font-size: 1.8em;
+    font-size: 2em; /* Larger section titles */
     color: #0056b3;
-    border-bottom: 1px solid #007bff;
-    padding-bottom: 5px;
-    margin-bottom: 15px;
+    border-bottom: 2px solid #007bff; /* Thicker underline */
+    padding-bottom: 8px;
+    margin-bottom: 20px;
     text-align: left;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .professional-style .experience-item,
 .professional-style .education-item {
-    margin-bottom: 15px;
-    border-left: 3px solid #ccc; /* Slightly darker border */
-    padding-left: 10px;
-    transition: border-color 0.2s ease;
+    margin-bottom: 20px; /* More space between items */
+    border-left: 4px solid #d0d0d0; /* Thicker border */
+    padding-left: 15px; /* More padding */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .professional-style .experience-item:hover,
 .professional-style .education-item:hover {
-    border-left-color: #007bff; /* Highlight on hover */
+    border-left-color: #007bff;
+    background-color: rgba(0, 123, 255, 0.03); /* Very subtle highlight */
 }
 
 .professional-style p {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }

@@ -23,11 +23,12 @@ def resume():
     name = request.form.get('name')
     email = request.form.get('email')
     phone = request.form.get('phone')
+    linkedin = request.form.get('linkedin') # Ensure LinkedIn is captured
     summary = request.form.get('summary')
     skills = request.form.get('skills')
     education = request.form.get('education')
     experience = request.form.get('experience')
-    reference = request.form.get('reference') # Capture the new 'reference' field
+    reference = request.form.get('reference') # Capture the 'reference' field
     template_style = request.form.get('template_style', 'minimal') # Get selected style, default to 'minimal'
 
     # Determine which template to render based on user's choice
@@ -41,14 +42,14 @@ def resume():
                            name=name,
                            email=email,
                            phone=phone,
+                           linkedin=linkedin, # Pass the LinkedIn data
                            summary=summary,
                            skills=skills,
                            education=education,
                            experience=experience,
-                           reference=reference) # Pass the new 'reference' data
+                           reference=reference) # Pass the 'reference' data
 
 if __name__ == '__main__':
     # Run the Flask app in debug mode for development.
     # It will automatically reload on code changes.
     app.run(debug=True, port=5000)
-

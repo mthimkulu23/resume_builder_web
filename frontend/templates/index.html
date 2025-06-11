@@ -1,19 +1,35 @@
 <!-- frontend/templates/index.html -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<!-- frontend/templates/index.html -->
 {% extends 'base.html' %}
 
 {% block content %}
 <h1>Resume Builder</h1>
-<form action="/resume" method="post">
-    <input type="text" name="name" placeholder="Full Names" required><br>
-    <input type="email" name="email" placeholder="Email" required><br>
-    <input type="text" name="phone" placeholder="Phone Number" required><br>
-    <textarea name="summary" placeholder="Professional Summary" required></textarea><br>
-    <textarea name="skills" placeholder="Skills (comma-separated)" required></textarea><br>
-    <textarea name="education" placeholder="Education (e.g., Degree, University, Dates)" required></textarea><br>
-    <textarea name="experience" placeholder="Work Experience (e.g., Job Title, Company, Dates, Responsibilities)" required></textarea><br>
-    <textarea name="experience" placeholder="Reference (e.g. Ref)" required></textarea><br>
+<form id="resumeForm" action="/resume" method="post" novalidate>
+    <input type="text" id="name" name="name" placeholder="Full Names" required><br>
+    <input type="email" id="email" name="email" placeholder="Email" required><br>
+    <input type="text" id="phone" name="phone" placeholder="Phone Number"><br>
+    <input type="url" id="linkedin" name="linkedin" placeholder="LinkedIn Profile URL (Optional)"><br>
+    <textarea id="summary" name="summary" placeholder="Professional Summary" required></textarea><br>
+    <textarea id="skills" name="skills" placeholder="Skills (comma-separated)" required></textarea><br>
+    <textarea id="education" name="education" placeholder="Education (e.g., Degree, University, Dates - one per line)" required></textarea><br>
+    <textarea id="experience" name="experience" placeholder="Work Experience (e.g., Job Title, Company, Dates, Responsibilities - one per line)" required></textarea><br>
+    <textarea id="reference" name="reference" placeholder="References (e.g., Available upon request or contact details)" required></textarea><br>
+
+    <div class="template-selection">
+        <h3>Choose Template Style:</h3>
+        <label>
+            <input type="radio" name="template_style" value="minimal" checked> Minimal
+        </label>
+        <label>
+            <input type="radio" name="template_style" value="professional"> Professional
+        </label>
+    </div>
 
     <button type="submit">Generate Resume</button>
 </form>
+
+<div id="message" class="message-area"></div>
+
 {% endblock %}
+
