@@ -1,13 +1,25 @@
 /* frontend/static/css/style.css */
 
+/* Keyframe for a subtle fade-in effect on page load */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    /* Corrected path for the background image */
+    background-image: url(/static/images/A4-Paper-Mockup-01.jpg);
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Prevents repeating */
+    background-attachment: fixed; /* Keeps image fixed on scroll */
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: flex-start; /* Align to top for longer forms */
     min-height: 100vh; /* Ensure it takes full viewport height */
+    animation: fadeIn 1s ease-out forwards; /* Apply fade-in animation */
 }
 
 .container {
@@ -18,6 +30,12 @@ body {
     padding: 30px; /* Increased padding */
     border-radius: 12px; /* More rounded corners */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition */
+}
+
+.container:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
 }
 
 h1 {
@@ -25,6 +43,20 @@ h1 {
     color: #333;
     margin-bottom: 25px;
     font-size: 2.5em; /* Larger heading */
+    position: relative;
+    padding-bottom: 10px;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: #007bff;
+    border-radius: 5px;
 }
 
 form {
@@ -41,6 +73,19 @@ input, textarea {
     border-radius: 8px; /* Rounded input fields */
     font-size: 1em;
     box-sizing: border-box; /* Include padding in width calculation */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+input:focus, textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Focus highlight */
+    outline: none;
+}
+
+/* Validation styling */
+input.invalid, textarea.invalid {
+    border-color: #e74c3c; /* Red border for invalid input */
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25);
 }
 
 textarea {
@@ -57,14 +102,21 @@ button {
     cursor: pointer;
     font-size: 1.1em;
     font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     align-self: center; /* Center the button */
     margin-top: 20px; /* Space above button */
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
 }
 
 button:hover {
     background-color: #0056b3;
     transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 6px 8px rgba(0, 123, 255, 0.3);
+}
+
+button:active {
+    transform: translateY(0); /* Press effect */
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
 }
 
 /* Template Selection Styles */
@@ -75,6 +127,7 @@ button:hover {
     background-color: #e6f7ff;
     border-radius: 8px;
     text-align: center;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Inner shadow for depth */
 }
 
 .template-selection h3 {
@@ -88,6 +141,11 @@ button:hover {
     font-weight: bold;
     color: #333;
     cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.template-selection label:hover {
+    color: #007bff;
 }
 
 /* Base Resume Display Styles (applied to both templates) */
@@ -96,6 +154,7 @@ button:hover {
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease-out; /* Smooth transition for template changes */
 }
 
 .resume-display h2 {
@@ -103,11 +162,30 @@ button:hover {
     margin-bottom: 20px;
     font-size: 2.2em;
     padding-bottom: 10px;
+    position: relative;
 }
+
+.resume-display h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background-color: #007bff;
+    border-radius: 5px;
+}
+
 
 .resume-display .section {
     margin-bottom: 20px;
     padding-bottom: 15px;
+    border-bottom: 1px dashed #eee;
+    transition: all 0.4s ease-in-out;
+}
+
+.resume-display .section:last-of-type {
+    border-bottom: none; /* No border for the last section */
 }
 
 .resume-display .section h3 {
@@ -131,6 +209,7 @@ button:hover {
 .minimal-style {
     text-align: center;
     max-width: 600px;
+    border: 1px solid #dcdcdc; /* Light border */
 }
 
 .minimal-style .minimal-name {
@@ -138,6 +217,7 @@ button:hover {
     font-weight: bold;
     color: #2c3e50;
     margin-bottom: 5px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
 }
 
 .minimal-style .minimal-contact {
@@ -158,6 +238,10 @@ button:hover {
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 15px;
+    background-color: #f0f0f0; /* Subtle background for titles */
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block; /* To make background fit content */
 }
 
 /* Professional Style Specifics */
@@ -165,14 +249,16 @@ button:hover {
     max-width: 750px;
     font-family: 'Times New Roman', serif;
     line-height: 1.5;
+    border: 1px solid #a8a8a8; /* More pronounced border */
 }
 
 .professional-style .professional-header {
-    background-color: #f8f8f8;
+    background-color: #e9e9e9; /* Slightly darker header */
     padding: 20px;
     margin-bottom: 25px;
     text-align: left;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid #a8a8a8; /* Stronger border */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 
 .professional-style .professional-header h1 {
@@ -180,6 +266,7 @@ button:hover {
     color: #333;
     margin-bottom: 5px;
     text-align: left;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.02);
 }
 
 .professional-style .contact-info {
@@ -190,6 +277,12 @@ button:hover {
 .professional-style .contact-info a {
     color: #007bff;
     text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.professional-style .contact-info a:hover {
+    color: #0056b3;
+    text-decoration: underline;
 }
 
 .professional-style .professional-section {
@@ -203,13 +296,21 @@ button:hover {
     padding-bottom: 5px;
     margin-bottom: 15px;
     text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .professional-style .experience-item,
 .professional-style .education-item {
     margin-bottom: 15px;
-    border-left: 3px solid #eee;
+    border-left: 3px solid #ccc; /* Slightly darker border */
     padding-left: 10px;
+    transition: border-color 0.2s ease;
+}
+
+.professional-style .experience-item:hover,
+.professional-style .education-item:hover {
+    border-left-color: #007bff; /* Highlight on hover */
 }
 
 .professional-style p {
