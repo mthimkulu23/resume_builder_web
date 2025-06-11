@@ -2,7 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const resumeForm = document.getElementById('resumeForm');
-    const messageDiv = document.getElementById('message');
+    const messageDiv = document.getElementById('message'); // Assuming this is your messageArea now
+    const submitButton = resumeForm.querySelector('button[type="submit"]');
 
     // Function to display validation messages
     function showMessage(msg, type = 'error') {
@@ -12,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
             messageDiv.classList.add('error-message');
         } else if (type === 'success') {
             messageDiv.classList.add('success-message');
+        } else if (type === 'info') { // Add info-message for loading states etc.
+            messageDiv.classList.add('info-message');
         }
         messageDiv.style.display = 'block';
     }
@@ -25,26 +28,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Basic validation function
+    // Client-side validation function
     function validateForm() {
         clearValidation(); // Clear previous messages and styles
 
         let isValid = true;
 
-        // Required text/textarea fields
-        const requiredFields = ['name', 'email', 'summary', 'skills', 'education', 'experience', 'reference'];
-        requiredFields.forEach(fieldId => {
-            const input = document.getElementById(fieldId);
+        // Required text/textarea fields based on 'required' attribute in HTML
+        const requiredInputs = resumeForm.querySelectorAll('[required]');
+        requiredInputs.forEach(input => {
             if (!input.value.trim()) {
                 input.classList.add('invalid');
                 isValid = false;
             }
         });
 
-        // Email format validation
+        // Specific email format validation
         const emailInput = document.getElementById('email');
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (emailInput && !emailRegex.test(emailInput.value.trim())) {
+        if (emailInput && emailInput.value.trim() && !emailRegex.test(emailInput.value.trim())) {
             emailInput.classList.add('invalid');
             isValid = false;
         }
@@ -59,21 +61,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listener for form submission
     if (resumeForm) {
         resumeForm.addEventListener('submit', (event) => {
+            // Only validate. If valid, the form proceeds to the action specified in HTML.
             if (!validateForm()) {
                 event.preventDefault(); // Stop form submission if validation fails
             }
         });
 
-        // Add input event listeners to clear validation on typing
+        // Add input event listeners for real-time validation feedback
         const formInputs = resumeForm.querySelectorAll('input, textarea');
         formInputs.forEach(input => {
             input.addEventListener('input', () => {
                 if (input.classList.contains('invalid')) {
-                    input.classList.remove('invalid');
-                    // Optionally re-validate all or clear message if no more invalid fields
+                    if (input.checkValidity()) {
+                         input.classList.remove('invalid');
+                    }
                     if (resumeForm.querySelectorAll('.invalid').length === 0) {
                         clearValidation();
                     }
+                }
+            });
+
+            input.addEventListener('blur', () => {
+                if (!input.checkValidity() && input.value.trim()) {
+                    input.classList.add('invalid');
+                } else if (!input.value.trim() && input.hasAttribute('required')) {
+                     input.classList.add('invalid');
+                } else {
+                    input.classList.remove('invalid');
+                }
+                 if (resumeForm.querySelectorAll('.invalid').length === 0) {
+                    clearValidation();
                 }
             });
         });

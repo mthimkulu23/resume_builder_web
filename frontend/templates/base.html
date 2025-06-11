@@ -1,19 +1,27 @@
-<!-- frontend/templates/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume Builder</title>
-    <!-- Link to the custom CSS file in the static folder -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="container">
-        <!-- This is where content from other templates (like index.html or resume.html) will be injected -->
         {% block content %}{% endblock %}
     </div>
-    <!-- Link to the custom JavaScript file -->
+
+    {# Inject the JSON data directly into a script tag #}
+    {# This is a more robust way to pass data from Flask to JavaScript #}
+    {% block resume_data_script %}
+        <script>
+            // Ensure resumeData is globally accessible (or scoped as needed by resume_display.js)
+            // This will be overridden by templates that define this block
+            var resumeDataFromFlask = {};
+        </script>
+    {% endblock %}
+
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/resume_display.js') }}"></script>
 </body>
 </html>

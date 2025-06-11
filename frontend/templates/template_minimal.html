@@ -1,27 +1,26 @@
-<!-- frontend/templates/template_minimal.html -->
 {% extends 'base.html' %}
 
 {% block content %}
 <div class="resume-display minimal-style">
-    <h2 class="minimal-name">{{ name }}</h2>
-    <p class="minimal-contact">{{ email }} | {{ phone }}</p>
-    {% if linkedin %}<p class="minimal-contact">{{ linkedin }}</p>{% endif %}
+    <h2 class="minimal-name">{{ name | e }}</h2>
+    <p class="minimal-contact">{{ email | e }} | {{ phone | e }}</p>
+    {% if linkedin %}<p class="minimal-contact"><a href="{{ linkedin | e }}" target="_blank">{{ linkedin | e }}</a></p>{% endif %}
 
     <div class="minimal-section">
         <h3 class="minimal-section-title">Summary</h3>
-        <p>{{ summary }}</p>
+        <p style="white-space: pre-wrap;">{{ summary | e }}</p>
     </div>
 
     <div class="minimal-section">
         <h3 class="minimal-section-title">Skills</h3>
-        <p>{{ skills }}</p>
+        <p style="white-space: pre-wrap;">{{ skills | e }}</p>
     </div>
 
     <div class="minimal-section">
         <h3 class="minimal-section-title">Education</h3>
         {% for line in education.split('\n') %}
             {% if line.strip() %}
-                <p>{{ line.strip() }}</p>
+                <p>{{ line.strip() | e }}</p>
             {% endif %}
         {% endfor %}
     </div>
@@ -30,16 +29,30 @@
         <h3 class="minimal-section-title">Experience</h3>
         {% for line in experience.split('\n') %}
             {% if line.strip() %}
-                <p>{{ line.strip() }}</p>
+                <p>{{ line.strip() | e }}</p>
             {% endif %}
         {% endfor %}
     </div>
 
     <div class="minimal-section">
         <h3 class="minimal-section-title">References</h3>
-        <p style="white-space: pre-wrap;">{{ reference }}</p>
+        <p style="white-space: pre-wrap;">{{ reference | e }}</p>
     </div>
 
     <button onclick="window.history.back()">Go Back</button>
-</div>
+    <button id="downloadPdfBtn" class="download-button" style="margin-left: 10px;">Download Resume as PDF</button>
+
+    {# IMPORTANT: The old 'data-resume-json' div is removed entirely #}
+
+    {# This block injects the resume_data directly into a JavaScript variable #}
+    {% block resume_data_script %}
+        <script>
+            // This global variable will be used by resume_display.js
+            var resumeDataFromFlask = {{ resume_data | tojson }};
+            // console.log("resumeDataFromFlask in template_minimal:", resumeDataFromFlask); // Optional debug
+        </script>
+    {% endblock %}
+
+</div> {# Closing tag for resume-display div #}
+
 {% endblock %}

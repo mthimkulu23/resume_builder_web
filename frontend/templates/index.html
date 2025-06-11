@@ -1,10 +1,8 @@
-<!-- frontend/templates/index.html -->
 {% extends 'base.html' %}
 
 {% block content %}
 <h1>Resume Builder</h1>
-<form id="resumeForm" action="/resume" method="post"> <!-- 'novalidate' attribute removed -->
-    <input type="text" id="name" name="name" placeholder="Full Names" required><br>
+<form id="resumeForm" action="/resume" method="post"> <input type="text" id="name" name="name" placeholder="Full Names" required><br>
     <input type="email" id="email" name="email" placeholder="Email" required><br>
     <input type="text" id="phone" name="phone" placeholder="Phone Number"><br>
     <input type="url" id="linkedin" name="linkedin" placeholder="LinkedIn Profile URL (Optional)"><br>

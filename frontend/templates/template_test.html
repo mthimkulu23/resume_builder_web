@@ -1,0 +1,35 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="resume-display professional-style">
+    {#
+    <header class="professional-header">
+        <h1>{{ name | e }}</h1>
+        <p class="contact-info">
+            <span>{{ email | e }}</span> | <span>{{ phone | e }}</span>
+            {% if linkedin %} | <a href="{{ linkedin | e }}" target="_blank">{{ linkedin | e }}</a>{% endif %}
+        </p>
+    </header>
+    #}
+
+    {#
+    <section class="professional-section">
+        <h2>Summary</h2>
+        <p style="white-space: pre-wrap;">{{ summary | e }}</p>
+    </section>
+    #}
+
+    <button onclick="window.history.back()">Go Back</button>
+    <button id="downloadPdfBtn" class="download-button" style="margin-left: 10px;">Download Resume as PDF</button>
+
+    {% raw %}
+    <div id="resume-data-container" style="display:none;"
+         data-resume-json="{{ resume_data_json_string | safe }}"></div>
+    {% endraw %}
+</div>
+
+<script>
+    // ... (your existing JavaScript)
+</script>
+{% endblock %}
