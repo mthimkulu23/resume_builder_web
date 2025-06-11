@@ -10,10 +10,10 @@ body {
     font-family: 'Arial', sans-serif; /* Using Arial as a common fallback */
     /* Background Image */
     background-image: url(/static/images/A4-Paper-Mockup-01.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Prevents repeating */
+    background-attachment: fixed; /* Keeps image fixed on scroll */
     
     /* Background Overlay for better readability over image */
     background-color: rgba(0, 0, 0, 0.1); /* Slight dark overlay */
@@ -108,6 +108,30 @@ input:focus, textarea:focus {
 input.invalid, textarea.invalid {
     border-color: #e74c3c;
     box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.3);
+}
+
+/* Styles for the message area */
+.message-area {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    display: none; /* Hidden by default, shown by JavaScript */
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.message-area.error-message {
+    background-color: rgba(255, 230, 230, 0.9); /* Light red background */
+    color: #cc0000; /* Dark red text */
+    border: 1px solid #cc0000;
+}
+
+.message-area.success-message {
+    background-color: rgba(230, 255, 230, 0.9); /* Light green background */
+    color: #008000; /* Dark green text */
+    border: 1px solid #008000;
 }
 
 textarea {
