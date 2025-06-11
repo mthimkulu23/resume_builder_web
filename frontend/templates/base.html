@@ -13,5 +13,7 @@
         <!-- This is where content from other templates (like index.html or resume.html) will be injected -->
         {% block content %}{% endblock %}
     </div>
+    <!-- Link to the custom JavaScript file -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
