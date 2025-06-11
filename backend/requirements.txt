@@ -1,0 +1,1 @@
+Flask==3.0.0 # Updated to Flask 3.x for compatibility

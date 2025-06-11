@@ -1,0 +1,39 @@
+<!-- frontend/templates/resume.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="resume-display">
+    <h2>Generated Resume</h2>
+
+    <div class="section">
+        <h3>Personal Information</h3>
+        <p><strong>Name:</strong> {{ name }}</p>
+        <p><strong>Email:</strong> {{ email }}</p>
+        <p><strong>Phone:</strong> {{ phone }}</p>
+    </div>
+
+    <div class="section">
+        <h3>Summary</h3>
+        <p>{{ summary }}</p>
+    </div>
+
+    <div class="section">
+        <h3>Skills</h3>
+        <p>{{ skills }}</p>
+    </div>
+
+    <div class="section">
+        <h3>Education</h3>
+        <!-- We're displaying raw text here, you could parse it in Flask for better formatting -->
+        <p style="white-space: pre-wrap;">{{ education }}</p>
+    </div>
+
+    <div class="section">
+        <h3>Experience</h3>
+        <!-- We're displaying raw text here, you could parse it in Flask for better formatting -->
+        <p style="white-space: pre-wrap;">{{ experience }}</p>
+    </div>
+
+    <button onclick="window.history.back()">Go Back</button>
+</div>
+{% endblock %}

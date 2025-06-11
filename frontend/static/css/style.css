@@ -1,0 +1,217 @@
+/* frontend/static/css/style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top for longer forms */
+    min-height: 100vh; /* Ensure it takes full viewport height */
+}
+
+.container {
+    width: 90%; /* Responsive width */
+    max-width: 800px; /* Max width to prevent it from getting too wide */
+    margin: 20px auto; /* Add margin for spacing */
+    background: white;
+    padding: 30px; /* Increased padding */
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 2.5em; /* Larger heading */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between form elements */
+}
+
+input, textarea {
+    width: calc(100% - 20px); /* Account for padding */
+    padding: 12px;
+    margin: 0; /* Remove default margin from original */
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Rounded input fields */
+    font-size: 1em;
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 80px; /* Minimum height for textareas */
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    align-self: center; /* Center the button */
+    margin-top: 20px; /* Space above button */
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Template Selection Styles */
+.template-selection {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #cceeff;
+    background-color: #e6f7ff;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.template-selection h3 {
+    margin-bottom: 10px;
+    color: #0056b3;
+    font-size: 1.2em;
+}
+
+.template-selection label {
+    margin: 0 15px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Base Resume Display Styles (applied to both templates) */
+.resume-display {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.resume-display h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2.2em;
+    padding-bottom: 10px;
+}
+
+.resume-display .section {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+}
+
+.resume-display .section h3 {
+    color: #007bff;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.resume-display .section p {
+    line-height: 1.6;
+    color: #555;
+    font-size: 1em;
+}
+
+.resume-display button {
+    display: block;
+    margin: 30px auto 0;
+}
+
+/* Minimal Style Specifics */
+.minimal-style {
+    text-align: center;
+    max-width: 600px;
+}
+
+.minimal-style .minimal-name {
+    font-size: 2.8em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.minimal-style .minimal-contact {
+    font-size: 0.9em;
+    color: #7f8c8d;
+    margin-bottom: 15px;
+}
+
+.minimal-style .minimal-section {
+    margin-top: 25px;
+    border-top: 1px solid #ecf0f1;
+    padding-top: 20px;
+}
+
+.minimal-style .minimal-section-title {
+    font-size: 1.6em;
+    color: #34495e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+/* Professional Style Specifics */
+.professional-style {
+    max-width: 750px;
+    font-family: 'Times New Roman', serif;
+    line-height: 1.5;
+}
+
+.professional-style .professional-header {
+    background-color: #f8f8f8;
+    padding: 20px;
+    margin-bottom: 25px;
+    text-align: left;
+    border-bottom: 2px solid #ccc;
+}
+
+.professional-style .professional-header h1 {
+    font-size: 3em;
+    color: #333;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.professional-style .contact-info {
+    font-size: 1em;
+    color: #666;
+}
+
+.professional-style .contact-info a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.professional-style .professional-section {
+    margin-bottom: 25px;
+}
+
+.professional-style .professional-section h2 {
+    font-size: 1.8em;
+    color: #0056b3;
+    border-bottom: 1px solid #007bff;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.professional-style .experience-item,
+.professional-style .education-item {
+    margin-bottom: 15px;
+    border-left: 3px solid #eee;
+    padding-left: 10px;
+}
+
+.professional-style p {
+    margin-bottom: 8px;
+}

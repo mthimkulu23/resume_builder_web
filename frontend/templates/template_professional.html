@@ -1,0 +1,53 @@
+<!-- frontend/templates/template_professional.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="resume-display professional-style">
+    <header class="professional-header">
+        <h1>{{ name }}</h1>
+        <p class="contact-info">
+            <span>{{ email }}</span> | <span>{{ phone }}</span>
+            {% if linkedin %} | <a href="{{ linkedin }}" target="_blank">{{ linkedin }}</a>{% endif %}
+        </p>
+    </header>
+
+    <section class="professional-section">
+        <h2>Summary</h2>
+        <p>{{ summary }}</p>
+    </section>
+
+    <section class="professional-section">
+        <h2>Skills</h2>
+        <p>{{ skills }}</p>
+    </section>
+
+    <section class="professional-section">
+        <h2>Experience</h2>
+        {% for line in experience.split('\n') %}
+            {% if line.strip() %}
+                <div class="experience-item">
+                    <p>{{ line.strip() }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </section>
+
+    <section class="professional-section">
+        <h2>Education</h2>
+        {% for line in education.split('\n') %}
+            {% if line.strip() %}
+                <div class="education-item">
+                    <p>{{ line.strip() }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </section>
+
+    <section class="professional-section">
+        <h2>References</h2>
+        <p style="white-space: pre-wrap;">{{ reference }}</p>
+    </section>
+
+    <button onclick="window.history.back()">Go Back</button>
+</div>
+{% endblock %}

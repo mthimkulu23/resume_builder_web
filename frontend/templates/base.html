@@ -1,0 +1,17 @@
+<!-- frontend/templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <!-- Link to the custom CSS file in the static folder -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- This is where content from other templates (like index.html or resume.html) will be injected -->
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

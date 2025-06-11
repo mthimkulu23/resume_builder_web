@@ -1,0 +1,45 @@
+<!-- frontend/templates/template_minimal.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="resume-display minimal-style">
+    <h2 class="minimal-name">{{ name }}</h2>
+    <p class="minimal-contact">{{ email }} | {{ phone }}</p>
+    {% if linkedin %}<p class="minimal-contact">{{ linkedin }}</p>{% endif %}
+
+    <div class="minimal-section">
+        <h3 class="minimal-section-title">Summary</h3>
+        <p>{{ summary }}</p>
+    </div>
+
+    <div class="minimal-section">
+        <h3 class="minimal-section-title">Skills</h3>
+        <p>{{ skills }}</p>
+    </div>
+
+    <div class="minimal-section">
+        <h3 class="minimal-section-title">Education</h3>
+        {% for line in education.split('\n') %}
+            {% if line.strip() %}
+                <p>{{ line.strip() }}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="minimal-section">
+        <h3 class="minimal-section-title">Experience</h3>
+        {% for line in experience.split('\n') %}
+            {% if line.strip() %}
+                <p>{{ line.strip() }}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="minimal-section">
+        <h3 class="minimal-section-title">References</h3>
+        <p style="white-space: pre-wrap;">{{ reference }}</p>
+    </div>
+
+    <button onclick="window.history.back()">Go Back</button>
+</div>
+{% endblock %}
