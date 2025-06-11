@@ -6,6 +6,7 @@ from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
 import io
 import json # Keep this import for the generate_resume_pdf route
+import os
 
 app = Flask(__name__,
             template_folder='../frontend/templates',
@@ -148,4 +149,5 @@ def generate_resume_pdf():
         return jsonify({"error": f"Failed to generate resume PDF: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+   port = int(os.environ.get('PORT', 5000))
+   app.run(debug=True, host='0.0.0.0', port=port)
