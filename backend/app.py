@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, send_file, jsonify
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
+from reportlab.lib.enums import TA_CENTER, TA_RIGHT
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
 import io
-import json
+import json # Keep this import for the generate_resume_pdf route
 import os
 
 app = Flask(__name__,
@@ -14,21 +14,11 @@ app = Flask(__name__,
 
 # Define custom styles for the PDF
 styles = getSampleStyleSheet()
-
-# Update or add more specific styles. Ensure each 'name' is unique.
-styles.add(ParagraphStyle(name='Heading1Centered', parent=styles['h1'], alignment=TA_CENTER, fontSize=24, spaceAfter=14, fontName='Helvetica-Bold'))
-styles.add(ParagraphStyle(name='ContactInfo', parent=styles['Normal'], alignment=TA_CENTER, fontSize=10, spaceAfter=14, fontName='Helvetica'))
-
-styles.add(ParagraphStyle(name='SectionHeading', parent=styles['h2'], fontSize=16, spaceAfter=6, spaceBefore=16, fontName='Helvetica-Bold', alignment=TA_LEFT, borderPadding=(0,0,0,0), bottomPadding=0, topPadding=0))
-styles.add(ParagraphStyle(name='SectionLine', parent=styles['Normal'], spaceAfter=10, fontSize=1, borderColor='black', borderPadding=(0,0,0,0), borderWidth=0.5, borderWidths=(0,0,0,0), lineCap='round'))
-
-# This is the ONLY place 'BodyText' should be defined with styles.add()
-styles.add(ParagraphStyle(name='BodyText', parent=styles['Normal'], fontSize=10, leading=14, spaceAfter=6, fontName='Helvetica'))
-styles.add(ParagraphStyle(name='ListItem', parent=styles['BodyText'], leftIndent=0.25 * inch, bulletIndent=0.1 * inch, bulletText='\u2022 ', spaceAfter=3))
-
-# Subheading style for Education/Experience titles if needed
-styles.add(ParagraphStyle(name='EntryTitle', parent=styles['h3'], fontSize=12, leading=14, spaceBefore=6, spaceAfter=2, fontName='Helvetica-Bold'))
-styles.add(ParagraphStyle(name='EntryDetails', parent=styles['Normal'], fontSize=10, leading=12, spaceAfter=4, fontName='Helvetica'))
+styles.add(ParagraphStyle(name='Heading1Centered', parent=styles['h1'], alignment=TA_CENTER, fontSize=24, spaceAfter=14))
+styles.add(ParagraphStyle(name='SectionHeading', parent=styles['h2'], fontSize=16, spaceAfter=10, spaceBefore=12, leading=18))
+styles.add(ParagraphStyle(name='Subheading', parent=styles['h3'], fontSize=12, leading=14, spaceAfter=4, spaceBefore=4))
+styles.add(ParagraphStyle(name='DateLocation', parent=styles['Normal'], fontSize=9, alignment=TA_RIGHT, spaceAfter=0))
+styles.add(ParagraphStyle(name='ListItem', parent=styles['Normal'], fontSize=10, leading=12, leftIndent=0.2 * inch, bulletIndent=0.1 * inch, spaceAfter=3, bulletText='\u2022'))
 
 
 @app.route('/')
@@ -61,8 +51,10 @@ def resume_html_display():
         'reference': reference
     }
 
+    # IMPORTANT DEBUGGING LINE: Print the resume_data dictionary to the Flask terminal
     print(f"DEBUG: resume_data sent to template: {resume_data}")
 
+    # Select the correct template based on user's choice
     if template_style == 'professional':
         resume_template = 'template_professional.html'
     else:
@@ -78,12 +70,11 @@ def resume_html_display():
                            education=education,
                            experience=experience,
                            reference=reference,
-                           resume_data=resume_data)
+                           resume_data=resume_data) # <--- Passed the dictionary 'resume_data' here
 
 @app.route('/generate_resume_pdf', methods=['POST'])
 def generate_resume_pdf():
     try:
-        app.logger.info("PDF generation request received.") # Added log
         data = request.json
         if not data:
             app.logger.warning("PDF generation requested with no data.")
@@ -100,88 +91,57 @@ def generate_resume_pdf():
         reference_str = data.get('reference', '')
 
         buffer = io.BytesIO()
-        doc = SimpleDocTemplate(buffer, pagesize=letter,
-                                leftMargin=0.75*inch, rightMargin=0.75*inch,
-                                topMargin=0.75*inch, bottomMargin=0.75*inch)
+        doc = SimpleDocTemplate(buffer, pagesize=letter)
         story = []
 
-        # --- Name and Contact Info ---
+        # Add content to the PDF
         story.append(Paragraph(name, styles['Heading1Centered']))
         contact_info_parts = [email]
         if phone:
             contact_info_parts.append(phone)
         if linkedin:
-            # Using <link> for clickable URL within ReportLab markup
-            contact_info_parts.append(f'<link href="{linkedin}">{linkedin}</link>')
-        
+            contact_info_parts.append(f'<a href="{linkedin}" color="blue">{linkedin}</a>')
+
         if contact_info_parts:
             contact_line = ' | '.join(contact_info_parts)
-            story.append(Paragraph(contact_line, styles['ContactInfo']))
-        
-        story.append(Spacer(1, 0.1 * inch)) # Add a small space after contact info
+            story.append(Paragraph(contact_line, styles['Normal']))
+        story.append(Spacer(1, 0.1 * inch))
 
-        app.logger.info(f"Generating PDF content for: {name}") # Added log
-
-        # --- Summary ---
-        if summary.strip():
+        if summary:
             story.append(Paragraph("Summary", styles['SectionHeading']))
-            story.append(Paragraph('<hr color="black" noshade size="1"/>', styles['SectionLine'])) # Horizontal line
+            story.append(Paragraph(summary, styles['Normal']))
             story.append(Spacer(1, 0.1 * inch))
-            story.append(Paragraph(summary.strip(), styles['BodyText']))
-            story.append(Spacer(1, 0.15 * inch))
 
-        # --- Skills ---
-        if skills.strip():
+        if skills:
             story.append(Paragraph("Skills", styles['SectionHeading']))
-            story.append(Paragraph('<hr color="black" noshade size="1"/>', styles['SectionLine'])) # Horizontal line
+            story.append(Paragraph(skills, styles['Normal']))
             story.append(Spacer(1, 0.1 * inch))
-            # Split skills by new line and use ListItem style
-            for line in skills.split('\n'):
-                line = line.strip()
-                if line:
-                    story.append(Paragraph(line, styles['ListItem']))
-            story.append(Spacer(1, 0.15 * inch))
 
-        # --- Experience ---
-        if experience_str.strip():
-            story.append(Paragraph("Experience", styles['SectionHeading']))
-            story.append(Paragraph('<hr color="black" noshade size="1"/>', styles['SectionLine'])) # Horizontal line
-            story.append(Spacer(1, 0.1 * inch))
-            # Split experience by new line and use ListItem style
-            for line in experience_str.split('\n'):
-                line = line.strip()
-                if line:
-                    story.append(Paragraph(line, styles['ListItem']))
-            story.append(Spacer(1, 0.15 * inch))
-
-        # --- Education ---
-        if education_str.strip():
+        if education_str:
             story.append(Paragraph("Education", styles['SectionHeading']))
-            story.append(Paragraph('<hr color="black" noshade size="1"/>', styles['SectionLine'])) # Horizontal line
-            story.append(Spacer(1, 0.1 * inch))
-            # Split education by new line. For a simple list, BodyText is fine.
             for line in education_str.split('\n'):
-                line = line.strip()
-                if line:
-                    story.append(Paragraph(line, styles['BodyText']))
-            story.append(Spacer(1, 0.15 * inch))
-
-        # --- References ---
-        if reference_str.strip():
-            story.append(Paragraph("References", styles['SectionHeading']))
-            story.append(Paragraph('<hr color="black" noshade size="1"/>', styles['SectionLine'])) # Horizontal line
+                if line.strip():
+                    story.append(Paragraph(line.strip(), styles['Normal']))
             story.append(Spacer(1, 0.1 * inch))
-            story.append(Paragraph(reference_str.strip(), styles['BodyText']))
-            story.append(Spacer(1, 0.15 * inch))
 
-        app.logger.info("Building PDF document...") # Added log
+        if experience_str:
+            story.append(Paragraph("Experience", styles['SectionHeading']))
+            for line in experience_str.split('\n'):
+                if line.strip():
+                    story.append(Paragraph(line.strip(), styles['ListItem']))
+            story.append(Spacer(1, 0.1 * inch))
+
+        if reference_str:
+            story.append(Paragraph("References", styles['SectionHeading']))
+            story.append(Paragraph(reference_str, styles['Normal']))
+            story.append(Spacer(1, 0.1 * inch))
+
         doc.build(story)
         buffer.seek(0)
-        app.logger.info("PDF document built successfully, preparing to send.") # Added log
 
         # Generate a safe filename
         filename = f"{name.replace(' ', '_').strip()}_Resume.pdf"
-        
+
         return send_file(buffer, as_attachment=True, download_name=filename, mimetype='application/pdf')
 
     except Exception as e:
@@ -189,8 +149,5 @@ def generate_resume_pdf():
         return jsonify({"error": f"Failed to generate resume PDF: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    # Get port from environment variable or default to 5000 for local development
-    port = int(os.environ.get('PORT', 5000))
-    # Run the Flask development server
-    # Gunicorn will handle this in production (Render)
-    app.run(debug=True, host='0.0.0.0', port=port)
+   port = int(os.environ.get('PORT', 5000))
+   app.run(debug=True, host='0.0.0.0', port=port)
