@@ -6,7 +6,7 @@ from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
 import io
 import json
-import os # <-- Added this import
+import os
 
 app = Flask(__name__,
             template_folder='../frontend/templates',
@@ -116,7 +116,7 @@ def generate_resume_pdf():
         
         if contact_info_parts:
             contact_line = ' | '.join(contact_info_parts)
-            story.append(Paragraph(contact_line, styles['ContactInfo'])) # Use ContactInfo style
+            story.append(Paragraph(contact_line, styles['ContactInfo']))
         
         story.append(Spacer(1, 0.1 * inch)) # Add a small space after contact info
 
@@ -127,7 +127,7 @@ def generate_resume_pdf():
             story.append(Paragraph("Summary", styles['SectionHeading']))
             story.append(Paragraph('<hr color="black" noshade size="1"/>', styles['SectionLine'])) # Horizontal line
             story.append(Spacer(1, 0.1 * inch))
-            story.append(Paragraph(summary.strip(), styles['BodyText'])) # Use BodyText style
+            story.append(Paragraph(summary.strip(), styles['BodyText']))
             story.append(Spacer(1, 0.15 * inch))
 
         # --- Skills ---
@@ -139,7 +139,7 @@ def generate_resume_pdf():
             for line in skills.split('\n'):
                 line = line.strip()
                 if line:
-                    story.append(Paragraph(line, styles['ListItem'])) # Use ListItem style
+                    story.append(Paragraph(line, styles['ListItem']))
             story.append(Spacer(1, 0.15 * inch))
 
         # --- Experience ---
@@ -151,7 +151,7 @@ def generate_resume_pdf():
             for line in experience_str.split('\n'):
                 line = line.strip()
                 if line:
-                    story.append(Paragraph(line, styles['ListItem'])) # Use ListItem style
+                    story.append(Paragraph(line, styles['ListItem']))
             story.append(Spacer(1, 0.15 * inch))
 
         # --- Education ---
@@ -163,7 +163,7 @@ def generate_resume_pdf():
             for line in education_str.split('\n'):
                 line = line.strip()
                 if line:
-                    story.append(Paragraph(line, styles['BodyText'])) # Use BodyText style
+                    story.append(Paragraph(line, styles['BodyText']))
             story.append(Spacer(1, 0.15 * inch))
 
         # --- References ---
@@ -171,7 +171,7 @@ def generate_resume_pdf():
             story.append(Paragraph("References", styles['SectionHeading']))
             story.append(Paragraph('<hr color="black" noshade size="1"/>', styles['SectionLine'])) # Horizontal line
             story.append(Spacer(1, 0.1 * inch))
-            story.append(Paragraph(reference_str.strip(), styles['BodyText'])) # Use BodyText style
+            story.append(Paragraph(reference_str.strip(), styles['BodyText']))
             story.append(Spacer(1, 0.15 * inch))
 
         app.logger.info("Building PDF document...") # Added log
