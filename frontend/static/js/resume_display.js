@@ -5,10 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // IMPORTANT CHANGE: Get data directly from the global variable set by Jinja2.
     // The old method of reading from data-resume-json is no longer used.
-    // The commented-out lines below are what was replaced.
-    // // Instead of:
-    // // const resumeDataContainer = document.getElementById('resume-data-container');
-    // // const resumeData = JSON.parse(resumeDataContainer.dataset.resumeJson || '{}');
     const resumeData = resumeDataFromFlask; // Use the global variable directly
 
     console.log('resumeData (parsed in JS):', resumeData);
@@ -70,7 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 console.log('Sending fetch request with data:', resumeData);
-                const response = await fetch('http://127.0.0.1:5000/generate_resume_pdf', {
+                // --- THIS IS THE CRITICAL CHANGE ---
+                // Changed from 'http://127.0.0.1:5000/generate_resume_pdf' to '/generate_resume_pdf'
+                const response = await fetch('/generate_resume_pdf', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
